@@ -64,13 +64,17 @@ class MainActivity : AppCompatActivity() {
         acronymViewModel.acronymResponse.observe(this) {
             showHideProgress(false)
             if (it != null && it.lfs.isNotEmpty()) {
-                acronymAdapter =
-                    AcronymAdapter(it.lfs, it.sf.toString(), object : ItemClickListener {
+                acronymAdapter = AcronymAdapter(it.lfs, it.sf.toString(), object : ItemClickListener {
                         override fun onItemClick(vars: ArrayList<Vars>, lf: String) {
-                            selectedLf = lf
-                            varsList = vars
-                            val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                            startActivity(intent)
+                            if (vars.isNotEmpty()) {
+                                selectedLf = lf
+                                varsList = vars
+                                val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                                startActivity(intent)
+
+                            } else {
+                                CommonUtils.showToast(mContext, getString(R.string.no_records))
+                            }
                         }
                     })
 
