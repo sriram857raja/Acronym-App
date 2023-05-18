@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Acronym App</string>
+    <string name="enter_text">Enter your acronym here</string>
+    <string name="network_error">Please check your Internet Connection..!</string>
+    <string name="try_again">Please try after sometime..!</string>
+    <string name="no_records">No records found..!</string>
+    <string name="acronym">Acronym</string>
+    <string name="definition">Definition</string>
+</resources>
