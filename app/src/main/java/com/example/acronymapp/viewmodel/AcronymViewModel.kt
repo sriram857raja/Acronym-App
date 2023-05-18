@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.acronymapp.R
+import com.example.acronymapp.helper.RetrofitHelper
 import com.example.acronymapp.helper.RetrofitInstance
 import com.example.acronymapp.model.AcronymModel
 import retrofit2.Call
@@ -18,7 +19,10 @@ class AcronymViewModel : ViewModel() {
     val progressBar = MutableLiveData(false)
 
     fun getAcronymInfo(context: Context, sf: String, lf: String) {
-        RetrofitInstance.api.getAcronym(sf, lf)?.enqueue(object : Callback<List<AcronymModel?>?> {
+
+        val api = RetrofitInstance.getInstance.create(RetrofitHelper::class.java)
+
+        api.getAcronym(sf, lf)?.enqueue(object : Callback<List<AcronymModel?>?> {
             override fun onResponse(
                 call: Call<List<AcronymModel?>?>, response: Response<List<AcronymModel?>?>
             ) {
