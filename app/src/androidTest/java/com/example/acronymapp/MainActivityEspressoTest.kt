@@ -1,6 +1,5 @@
 package com.example.acronymapp
 
-import android.support.test.rule.ActivityTestRule
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
