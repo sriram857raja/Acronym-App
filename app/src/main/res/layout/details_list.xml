@@ -16,6 +16,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="42dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
             android:elevation="8dp"
             app:cardCornerRadius="8dp"
@@ -27,9 +29,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:fontFamily="sans-serif"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text='@{varsModel.lf}'
+                android:text='@{String.format("%s %s %s", varsModel.lf, ", Since - " ,  varsModel.since)}'
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

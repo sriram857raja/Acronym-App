@@ -93,7 +93,6 @@ dependencies {
     // required if you want to use Mockito for Android tests
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'
     testImplementation("org.mockito:mockito-inline:2.13.0")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
 
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

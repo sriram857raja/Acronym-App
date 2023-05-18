@@ -1,10 +1,8 @@
 package com.example.acronymapp.activities
 
 import android.content.Context
-import androidx.test.core.app.ActivityScenario
 import com.example.acronymapp.utils.CommonUtils
 import com.example.acronymapp.viewmodel.AcronymViewModel
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -12,7 +10,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -37,9 +34,8 @@ internal class MainActivityTest {
 
     @Test
     fun isInvalidText() {
-        val mockUtil = mock(MainActivity::class.java)
-        `when`(mockUtil.isValidText("hm")).thenReturn(false)
-        val actualResult = mockUtil.isValidText("hm")
+        `when`(mainActivity.isValidText("hm")).thenReturn(false)
+        val actualResult = mainActivity.isValidText("hm")
         assertEquals(false, actualResult)
     }
 
