@@ -23,7 +23,7 @@ class AcronymViewModel : ViewModel() {
     val progressBar = MutableLiveData(false)
     var job: Job? = null
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onError("Exception handled: ${throwable.localizedMessage}")
+        onError("Error : ${throwable.localizedMessage}")
     }
 
     fun getAcronymData(context: Context, sf: String, lf: String) {
@@ -38,8 +38,8 @@ class AcronymViewModel : ViewModel() {
                             if (it.isEmpty()) {
                                 onError(context.getString(R.string.no_records))
                             } else {
-                                progressBar.value = false
-                                acronymResponse.value = response.body()!![0]
+                                progressBar.postValue(false)
+                                acronymResponse.postValue(response.body()!![0])
                             }
                         }
                     } else {
@@ -51,8 +51,8 @@ class AcronymViewModel : ViewModel() {
     }
 
     private fun onError(message: String) {
-        errorMessage.value = message
-        progressBar.value = false
+        errorMessage.postValue(message)
+        progressBar.postValue(false)
     }
 
     override fun onCleared() {
