@@ -62,9 +62,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObservers() {
         acronymViewModel.acronymResponse.observe(this) {
-            showHideProgress(false)
             if (it != null && it.lfs.isNotEmpty()) {
-                acronymAdapter = AcronymAdapter(it.lfs, it.sf.toString(), object : ItemClickListener {
+                acronymAdapter =
+                    AcronymAdapter(it.lfs, it.sf.toString(), object : ItemClickListener {
                         override fun onItemClick(vars: ArrayList<Vars>, lf: String) {
                             if (vars.isNotEmpty()) {
                                 selectedLf = lf
@@ -88,7 +88,6 @@ class MainActivity : AppCompatActivity() {
             if (this::acronymAdapter.isInitialized) {
                 acronymAdapter.clearList()
             }
-            showHideProgress(false)
             CommonUtils.showToast(mContext, it)
         }
 
@@ -99,17 +98,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun getInfo(info: String) {
         if (CommonUtils.isOnline(mContext)) {
-            showHideProgress(true)
-            acronymViewModel.getAcronymInfo(mContext, info, "")
+            acronymViewModel.getAcronymData(mContext, info, "")
         } else {
-            showHideProgress(false)
             CommonUtils.showToast(mContext, getString(R.string.network_error))
         }
     }
 
-    private fun showHideProgress(isShow: Boolean) {
-        acronymViewModel.progressBar.value = isShow
-    }
 
     fun isValidText(text: String): Boolean {
         if (text.length >= 3) {

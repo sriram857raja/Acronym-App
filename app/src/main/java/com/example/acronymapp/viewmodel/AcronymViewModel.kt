@@ -7,9 +7,13 @@ import com.example.acronymapp.R
 import com.example.acronymapp.helper.RetrofitHelper
 import com.example.acronymapp.helper.RetrofitInstance
 import com.example.acronymapp.model.AcronymModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class AcronymViewModel : ViewModel() {
 
@@ -17,33 +21,43 @@ class AcronymViewModel : ViewModel() {
     val acronymResponse: MutableLiveData<AcronymModel> = MutableLiveData()
     val errorMessage = MutableLiveData<String>()
     val progressBar = MutableLiveData(false)
+    var job: Job? = null
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        onError("Exception handled: ${throwable.localizedMessage}")
+    }
 
-    fun getAcronymInfo(context: Context, sf: String, lf: String) {
-
+    fun getAcronymData(context: Context, sf: String, lf: String) {
+        progressBar.value = true
         val api = RetrofitInstance.getInstance.create(RetrofitHelper::class.java)
-
-        api.getAcronym(sf, lf)?.enqueue(object : Callback<List<AcronymModel?>?> {
-            override fun onResponse(
-                call: Call<List<AcronymModel?>?>, response: Response<List<AcronymModel?>?>
-            ) {
-                if (response.body() != null) {
-                    response.body()?.let {
-                        if (it.isEmpty()) {
-                            errorMessage.value = context.getString(R.string.no_records)
-                        } else {
-                            acronymResponse.value = response.body()!![0]
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = api.getAcronymInfo(sf, lf)
+            withContext(Dispatchers.Main) {
+                response?.let {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.isEmpty()) {
+                                onError(context.getString(R.string.no_records))
+                            } else {
+                                progressBar.value = false
+                                acronymResponse.value = response.body()!![0]
+                            }
                         }
+                    } else {
+                        onError("Error : ${response.message()} ")
                     }
-                } else {
-                    errorMessage.value = context.getString(R.string.no_records)
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<List<AcronymModel?>?>, t: Throwable) {
-                errorMessage.value = t.message.toString()
-            }
+    private fun onError(message: String) {
+        errorMessage.value = message
+        progressBar.value = false
+    }
 
-        })
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 
 
