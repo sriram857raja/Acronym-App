@@ -1,7 +1,6 @@
 package com.example.acronymapp
 
 
-import com.example.acronymapp.helper.RetrofitHelper
 import com.example.acronymapp.helper.RetrofitInstance
 import org.junit.Test
 import retrofit2.Retrofit
