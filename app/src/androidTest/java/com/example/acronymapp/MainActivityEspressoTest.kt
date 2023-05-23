@@ -27,20 +27,22 @@ class MainActivityEspressoTest {
 
     @Test
     fun editTextChanges() {
-        onView(withId(R.id.editText)).perform(typeText("hm"))
-            .check(matches(withText("hm")))
+        onView(withId(R.id.editText)).perform(typeText("hmm")).check(matches(withText("hmm")))
     }
 
     @Test
     fun recyclerScroll() {
+        editTextChanges()
+
+        Thread.sleep(5000L)
+
         onView(withId(R.id.recyclerview)).inRoot(
             RootMatchers.withDecorView(
                 Matchers.`is`(
                     mActivityRule.activity.window.decorView
                 )
             )
-        )
-            .perform((getRVCount().let {
+        ).perform((getRVCount().let {
                 RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                     it
                 )
@@ -51,7 +53,7 @@ class MainActivityEspressoTest {
     private fun getRVCount(): Int {
         val recyclerView =
             mActivityRule.activity.findViewById<View>(R.id.recyclerview) as RecyclerView
-        return recyclerView.adapter!!.itemCount
+        return recyclerView.adapter?.itemCount ?: 0
     }
 
 }
