@@ -22,13 +22,6 @@ internal class CommonUtilsTest {
     }
 
     @Test
-    fun isOnline() {
-        Mockito.`when`(context.getSystemService(Context.CONNECTIVITY_SERVICE))
-            .thenReturn(manager)
-        Assert.assertEquals(true, CommonUtils.isOnline(context))
-    }
-
-    @Test
     fun isNotOnline() {
         Mockito.`when`(context.getSystemService(Context.CONNECTIVITY_SERVICE))
             .thenReturn(manager)

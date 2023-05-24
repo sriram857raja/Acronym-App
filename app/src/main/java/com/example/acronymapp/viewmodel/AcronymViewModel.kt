@@ -21,7 +21,7 @@ class AcronymViewModel : ViewModel() {
     val acronymResponse: MutableLiveData<AcronymModel> = MutableLiveData()
     val errorMessage = MutableLiveData<String>()
     val progressBar = MutableLiveData(false)
-    var job: Job? = null
+    private var job: Job? = null
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Error : ${throwable.localizedMessage}")
     }
