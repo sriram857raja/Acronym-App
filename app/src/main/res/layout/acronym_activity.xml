@@ -23,6 +23,7 @@
             android:background="@drawable/rectangle_background"
             android:hint="@string/enter_text"
             android:padding="8dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
